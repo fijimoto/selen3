@@ -1,0 +1,8 @@
+{
+  "base_url": "http://the-internet.herokuapp.com",
+  "timeout": 10,
+  "pc_window_size": {
+    "width": 1920,
+    "height": 1080
+  }
+}
