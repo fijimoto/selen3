@@ -15,7 +15,7 @@ class TestSlider:
         """Тест #5: Установить случайное значение слайдера и проверить"""
         page = SliderPage(browser)
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/horizontal_slider")
         assert page.is_opened(), "Страница Slider не открылась"
 
         min_value = page.get_slider_min()

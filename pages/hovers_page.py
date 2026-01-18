@@ -8,8 +8,6 @@ from logger.logger import Logger
 
 
 class HoversPage(BasePage):
-    PATH = "/hovers"
-
     UNIQUE_ELEMENT_LOC = "//div[contains(@class, 'example')]"
     USER_CARD_LOC = "(//div[contains(@class, 'figure')])[{}]"
 

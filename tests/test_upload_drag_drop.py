@@ -18,7 +18,7 @@ class TestUploadDragDrop:
             __file__), "..", "resources", "test_file.txt")
         test_file_path = os.path.abspath(test_file_path)
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/upload")
         assert page.is_opened(), "Страница Upload не открылась"
 
         page.upload_via_drag_and_drop(test_file_path)

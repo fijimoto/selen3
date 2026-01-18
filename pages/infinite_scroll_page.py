@@ -1,64 +1,35 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from bs4 import BeautifulSoup
 
-from pages.base_page import BasePage
 from elements.label import Label
-from elements.multi_element import MultiWebElement
-from logger.logger import Logger
+from pages.base_page import BasePage
 
 
 class InfiniteScrollPage(BasePage):
-    PATH = "/infinite_scroll"
-
-    UNIQUE_ELEMENT_LOC = "//div[contains(@class, 'jscroll-inner')]"
-    PARAGRAPH_LOC = "(//div[contains(@class, 'jscroll-inner')]//div[contains(@class, 'jscroll-added')])[{}]"
+    UNIQUE_ELEMENT_LOC = "//div//h3[contains(text(), 'Infinite Scroll')]"
+    SCROLL_TEXT_LOC = "(//div[contains(@class, 'jscroll-added')])[last()]"
 
     def __init__(self, browser):
         super().__init__(browser)
+        self.page_name = "Infinity Scroll Page"
+        self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, description="Unique_element page -> None")
 
-        self.page_name = "Infinite Scroll Page"
+        self.elements_text_loc = Label(browser, self.SCROLL_TEXT_LOC, description="Elements_text_loc -> None")
 
-        self.unique_element = Label(
-            self.browser,
-            self.UNIQUE_ELEMENT_LOC,
-            description="Infinite Scroll -> Container"
-        )
+    def scroll_element(self, age):
+        lst_paragraphs = []
+        while True:
+            self.elements_text_loc.wait_for_presence()
+            self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-        self.paragraphs = MultiWebElement(
-            self.browser,
-            self.PARAGRAPH_LOC,
-            description="Infinite Scroll -> Paragraphs"
-        )
+            soup = BeautifulSoup(self.browser.driver.page_source, "html.parser")
+            paragraphs = soup.find_all("div", class_="jscroll-added")
 
-    def get_paragraphs_count(self) -> int:
-        """Получить количество абзацев на странице"""
-        count = sum(1 for _ in self.paragraphs)
-        Logger.info(f"{self}: paragraphs count = {count}")
-        return count
+            for p in paragraphs:
+                txt = p.get_text(strip=True)
+                if txt and txt not in lst_paragraphs:
+                    lst_paragraphs.append(txt)
 
-    def scroll_until_count(self, target_count: int, max_scrolls: int = 100) -> int:
-        """Прокручивать пока не достигнем нужного количества абзацев"""
-        Logger.info(f"{self}: scroll until {target_count} paragraphs")
+            if len(lst_paragraphs) >= age:
+                break
 
-        scrolls = 0
-        paragraph_xpath = "//div[contains(@class, 'jscroll-inner')]//div[contains(@class, 'jscroll-added')]"
-
-        while scrolls < max_scrolls:
-            current_count = len(self.browser.driver.find_elements(By.XPATH, paragraph_xpath))
-            if current_count >= target_count:
-                Logger.info(f"{self}: reached {current_count} paragraphs")
-                return current_count
-
-            self.browser.scroll_to_bottom()
-
-            # Ждем пока загрузятся новые элементы
-            try:
-                WebDriverWait(self.browser.driver, 2).until(
-                    lambda driver: len(driver.find_elements(By.XPATH, paragraph_xpath)) > current_count
-                )
-            except:
-                pass  # Если не загрузились новые элементы за 2 секунды, продолжаем
-
-            scrolls += 1
-
-        return len(self.browser.driver.find_elements(By.XPATH, paragraph_xpath))
+        return lst_paragraphs[:age]

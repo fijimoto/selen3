@@ -5,8 +5,6 @@ from logger.logger import Logger
 
 
 class DynamicContentPage(BasePage):
-    PATH = "/dynamic_content"
-
     UNIQUE_ELEMENT_LOC = "content"
     IMAGE_LOC = "(//*[@id='content']//*[contains(@class, 'large-2') and contains(@class, 'columns')]//img)[{}]"
 

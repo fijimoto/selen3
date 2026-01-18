@@ -12,7 +12,7 @@ class TestBasicAuth:
         password = "admin"
 
         browser.get(
-            f"http://{username}:{password}@the-internet.herokuapp.com{page.PATH}")
+            f"http://{username}:{password}@the-internet.herokuapp.com/basic_auth")
 
         assert page.is_opened(), "Страница не открылась после авторизации"
 

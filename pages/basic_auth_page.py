@@ -3,8 +3,6 @@ from elements.label import Label
 
 
 class BasicAuthPage(BasePage):
-    PATH = "/basic_auth"
-
     UNIQUE_ELEMENT_LOC = "content"
     CONTENT_LOC = "//*[@id='content']//p"
 

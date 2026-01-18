@@ -14,7 +14,7 @@ class TestHovers:
         """Тест #6: Навести курсор на каждого пользователя и проверить профиль"""
         hovers_page = HoversPage(browser)
 
-        browser.get(f"{BASE_URL}{hovers_page.PATH}")
+        browser.get(f"{BASE_URL}/hovers")
         assert hovers_page.is_opened(), "Страница Hovers не открылась"
 
         users_count = hovers_page.get_user_cards_count()

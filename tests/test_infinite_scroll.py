@@ -14,10 +14,10 @@ class TestInfiniteScroll:
         page = InfiniteScrollPage(browser)
         my_age = 24
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/infinite_scroll")
         assert page.is_opened(), "Страница Infinite Scroll не открылась"
 
-        actual_count = page.scroll_until_count(my_age)
+        paragraphs = page.scroll_element(my_age)
 
-        assert actual_count >= my_age, \
-            f"Expected at least {my_age} paragraphs, Actual: {actual_count}"
+        assert len(paragraphs) >= my_age, \
+            f"Expected at least {my_age} paragraphs, Actual: {len(paragraphs)}"

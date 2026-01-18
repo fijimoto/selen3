@@ -18,7 +18,7 @@ class TestAlerts:
         expected_alert_text = "I am a JS Alert"
         expected_result = "You successfully clicked an alert"
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/javascript_alerts")
         assert page.is_opened(), "Страница Alerts не открылась"
 
         page.click_js_alert()
@@ -39,7 +39,7 @@ class TestAlerts:
         expected_alert_text = "I am a JS Confirm"
         expected_result = "You clicked: Ok"
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/javascript_alerts")
         assert page.is_opened(), "Страница Alerts не открылась"
 
         page.click_js_confirm()
@@ -60,7 +60,7 @@ class TestAlerts:
         expected_alert_text = "I am a JS prompt"
         random_text = fake.sentence(nb_words=3)
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/javascript_alerts")
         assert page.is_opened(), "Страница Alerts не открылась"
 
         page.click_js_prompt()
@@ -83,7 +83,7 @@ class TestAlerts:
         expected_alert_text = "I am a JS Alert"
         expected_result = "You successfully clicked an alert"
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/javascript_alerts")
         assert page.is_opened(), "Страница Alerts не открылась"
 
         browser.execute_script("jsAlert()")
@@ -104,7 +104,7 @@ class TestAlerts:
         expected_alert_text = "I am a JS Confirm"
         expected_result = "You clicked: Ok"
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/javascript_alerts")
         assert page.is_opened(), "Страница Alerts не открылась"
 
         browser.execute_script("jsConfirm()")
@@ -125,7 +125,7 @@ class TestAlerts:
         expected_alert_text = "I am a JS prompt"
         random_text = fake.sentence(nb_words=3)
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/javascript_alerts")
         assert page.is_opened(), "Страница Alerts не открылась"
 
         browser.execute_script("jsPrompt()")

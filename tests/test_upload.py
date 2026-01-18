@@ -32,7 +32,7 @@ class TestUpload:
         test_file_path, test_file_name = test_file
         page = UploadPage(browser)
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/upload")
         assert page.is_opened(), "Страница Upload не открылась"
 
         page.upload_file(test_file_path)

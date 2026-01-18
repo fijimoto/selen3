@@ -5,7 +5,6 @@ from logger.logger import Logger
 
 
 class FramesPage(BasePage):
-    PATH = "/frames"
     DEMOQA_URL = "https://demoqa.com/frames"
 
     UNIQUE_ELEMENT_LOC = "//div[contains(@class, 'example')]//h3"

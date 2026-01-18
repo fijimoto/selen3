@@ -14,7 +14,7 @@ class TestDynamicContent:
         page = DynamicContentPage(browser)
         max_attempts = 50
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/dynamic_content")
         assert page.is_opened(), "Страница Dynamic Content не открылась"
 
         attempt = 0

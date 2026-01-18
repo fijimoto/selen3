@@ -10,8 +10,6 @@ from logger.logger import Logger
 
 
 class UploadPage(BasePage):
-    PATH = "/upload"
-
     UNIQUE_ELEMENT_LOC = "//div[contains(@class, 'example')]//h3"
     FILE_INPUT_LOC = "file-upload"
     UPLOAD_BUTTON_LOC = "file-submit"

@@ -7,20 +7,29 @@ from logger.logger import Logger
 
 
 class BaseElement:
-    TIMEOUT = 10
+    DEFAULT_TIMEOUT = 10
 
-    def __init__(self, browser, locator: str, description: str = ""):
+    def __init__(
+            self,
+            browser,
+            locator: str | tuple,
+            description: str = None,
+            timeout: int = DEFAULT_TIMEOUT
+    ):
         self.browser = browser
-        self.locator = self._parse_locator(locator)
-        self.description = description
+        self.timeout = timeout
 
-        self._wait = WebDriverWait(browser.driver, self.TIMEOUT)
+        if isinstance(locator, str):
+            if "/" in locator:
+                self.locator = (By.XPATH, locator)
+            else:
+                self.locator = (By.ID, locator)
+        else:
+            self.locator = locator
 
-    def _parse_locator(self, locator: str) -> tuple:
-        """Определить тип локатора: ID или XPATH"""
-        if locator.startswith("//") or locator.startswith("(//"):
-            return (By.XPATH, locator)
-        return (By.ID, locator)
+        self.description = description if description else str(locator)
+
+        self._wait = WebDriverWait(self.browser.driver, timeout=self.timeout)
 
     def wait_for_presence(self):
         """Ждать появления элемента в DOM"""
@@ -58,8 +67,11 @@ class BaseElement:
 
     def get_attribute(self, name: str) -> str:
         """Получить атрибут элемента"""
+        element = self.wait_for_presence()
         Logger.info(f"{self}: get attribute '{name}'")
-        return self.wait_for_presence().get_attribute(name)
+        value = element.get_attribute(name)
+        Logger.info(f"{self}: attribute '{name}' = '{value}'")
+        return value
 
     def is_enabled(self) -> bool:
         """Проверить что элемент активен"""

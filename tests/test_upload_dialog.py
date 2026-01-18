@@ -18,7 +18,7 @@ class TestUploadDialog:
             __file__), "..", "resources", "test_image.png")
         test_file_path = os.path.abspath(test_file_path)
 
-        browser.get(f"{BASE_URL}{page.PATH}")
+        browser.get(f"{BASE_URL}/upload")
         assert page.is_opened(), "Страница Upload не открылась"
 
         page.upload_via_dialog(test_file_path)

@@ -1,11 +1,9 @@
-from pages.base_page import BasePage
-from elements.button import Button
 from elements.label import Label
+from elements.button import Button
+from pages.base_page import BasePage
 
 
 class WindowsPage(BasePage):
-    PATH = "/windows"
-
     UNIQUE_ELEMENT_LOC = "//div[contains(@class, 'example')]//h3"
     CLICK_HERE_LINK_LOC = "//a[contains(text(), 'Click Here')]"
 

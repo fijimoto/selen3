@@ -10,8 +10,6 @@ from logger.logger import Logger
 
 
 class SliderPage(BasePage):
-    PATH = "/horizontal_slider"
-
     UNIQUE_ELEMENT_LOC = "//input[@type='range']"
     SLIDER_LOC = "//input[@type='range']"
     SLIDER_VALUE_LOC = "range"
@@ -74,9 +72,7 @@ class SliderPage(BasePage):
 
         actions = ActionChains(self.browser.driver)
         if steps > 0:
-            for _ in range(abs(steps)):
-                actions.send_keys(Keys.ARROW_RIGHT)
+            actions.send_keys(Keys.ARROW_RIGHT * abs(steps))
         else:
-            for _ in range(abs(steps)):
-                actions.send_keys(Keys.ARROW_LEFT)
+            actions.send_keys(Keys.ARROW_LEFT * abs(steps))
         actions.perform()

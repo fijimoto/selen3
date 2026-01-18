@@ -4,8 +4,6 @@ from elements.label import Label
 
 
 class AlertsPage(BasePage):
-    PATH = "/javascript_alerts"
-
     UNIQUE_ELEMENT_LOC = "//h3[text()='JavaScript Alerts']"
     JS_ALERT_BUTTON_LOC = "//button[@onclick='jsAlert()']"
     JS_CONFIRM_BUTTON_LOC = "//button[@onclick='jsConfirm()']"

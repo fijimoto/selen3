@@ -16,7 +16,7 @@ class TestWindows:
         expected_new_window_text = "New Window"
         expected_new_window_title = "New Window"
 
-        browser.get(f"{BASE_URL}{windows_page.PATH}")
+        browser.get(f"{BASE_URL}/windows")
         assert windows_page.is_opened(), "Страница Windows не открылась"
 
         handles_before = browser.get_window_handles()
