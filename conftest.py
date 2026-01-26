@@ -1,3 +1,4 @@
+import os
 import pytest
 from browser.browser import Browser
 from browser.browser_factory import BrowserFactory
@@ -8,7 +9,19 @@ config = ConfigReader()
 
 @pytest.fixture(scope="function")
 def browser():
-    driver = BrowserFactory.get_driver(window_size=config.pc_window_size)
+    options = []
+
+    if os.getenv("DOCKER_ENV"):
+        options = [
+            "--headless",
+            "--no-sandbox",
+            "--disable-dev-shm-usage"
+        ]
+
+    driver = BrowserFactory.get_driver(
+        window_size=config.pc_window_size,
+        options=options
+    )
     browser = Browser(driver)
     yield browser
     browser.quit()
