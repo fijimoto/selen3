@@ -17,8 +17,9 @@ WORKDIR /app
 
 ENV DOCKER_ENV=1
 
-COPY . .
-
+COPY requirements.txt .
 RUN pip install -r requirements.txt
+
+COPY . .
 
 CMD ["pytest", "tests/", "-v"]

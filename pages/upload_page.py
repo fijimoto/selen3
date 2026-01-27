@@ -1,12 +1,13 @@
 import os
-import time
-
+import sys
 from pages.base_page import BasePage
 from elements.label import Label
 from elements.input import Input
 from elements.button import Button
-from utils.pyautogui_utils import PyautoguiUtils
 from logger.logger import Logger
+
+if sys.platform == "win32":
+    from utils.pyautogui_utils import PyautoguiUtils
 
 
 class UploadPage(BasePage):
@@ -18,33 +19,27 @@ class UploadPage(BasePage):
 
     def __init__(self, browser):
         super().__init__(browser)
-
         self.page_name = "Upload Page"
-
         self.unique_element = Label(
             self.browser,
             self.UNIQUE_ELEMENT_LOC,
             description="Upload -> Header"
         )
-
         self.file_input = Input(
             self.browser,
             self.FILE_INPUT_LOC,
             description="Upload -> File input"
         )
-
         self.upload_button = Button(
             self.browser,
             self.UPLOAD_BUTTON_LOC,
             description="Upload -> Upload button"
         )
-
         self.uploaded_file = Label(
             self.browser,
             self.UPLOADED_FILE_LOC,
             description="Upload -> Uploaded file name"
         )
-
         self.success_message = Label(
             self.browser,
             self.SUCCESS_MESSAGE_LOC,
@@ -52,7 +47,7 @@ class UploadPage(BasePage):
         )
 
     def upload_file(self, file_path: str) -> None:
-        """Загрузить файл через send_keys обёртки"""
+        """Загрузить файл через send_keys"""
         Logger.info(f"{self}: upload file '{file_path}'")
         absolute_path = os.path.abspath(file_path)
         self.file_input.send_keys(absolute_path)
@@ -71,21 +66,14 @@ class UploadPage(BasePage):
         return self.uploaded_file.get_text()
 
     def upload_via_dialog(self, file_path: str) -> None:
-        """Загрузить файл через системное диалоговое окно
-
-        Примечание: В некоторых окружениях PyAutoGUI может не работать с системными диалогами.
-        В качестве fallback используем send_keys для загрузки файла напрямую.
-        """
+        """Загрузить файл через системное диалоговое окно"""
         absolute_path = os.path.abspath(file_path)
         Logger.info(f"{self}: upload via dialog '{absolute_path}'")
-
         self.file_input.send_keys(absolute_path)
         Logger.info(f"{self}: file uploaded via file input")
 
     def upload_via_drag_and_drop(self, file_path: str) -> None:
-        """Загрузить файл через Drag and Drop (используем send_keys обёртки)"""
+        """Загрузить файл через Drag and Drop"""
         absolute_path = os.path.abspath(file_path)
         Logger.info(f"{self}: upload via drag and drop '{absolute_path}'")
-
         self.file_input.send_keys(absolute_path)
-        Logger.info(f"{self}: file path sent via send_keys")
